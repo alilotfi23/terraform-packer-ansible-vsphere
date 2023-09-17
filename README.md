@@ -11,7 +11,7 @@ Install builder
 packer init .
 ```
 
-make sure your configuration is syntactically valid and internally consistent by using the packer validate command.
+make sure your configuration is syntactically valid by using the packer validate command.
 
 ```shell
 packer validate .
