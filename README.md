@@ -22,7 +22,7 @@ Build the image with the packer build command.
 ```shell
 packer build .
 ```
-##terraform-vsphere]
+##terraform-vsphere
 
 Install provider
 
