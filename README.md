@@ -1,4 +1,6 @@
 # terraform-packer-ansible-vsphere
+![pic](https://github.com/alilotfi23/terraform-packer-ansible-vsphere/assets/91953142/8ca60185-8d46-41d9-b829-9825b2a6ee0b)
+
 ## packer-vsphere-iso
 
 Build a basic Ubuntu VM from an iso image with packer hashicorp
