@@ -5,7 +5,7 @@
 
 Build a basic Ubuntu VM from an iso image with packer hashicorp
 
-## packer-vsphere
+## packer 
 
 Install builder 
 
