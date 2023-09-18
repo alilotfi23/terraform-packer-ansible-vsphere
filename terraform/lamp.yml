@@ -1,4 +1,4 @@
-- name: Ansible apt module examples
+- name: instsall pkgs
   hosts: web
   become: yes
   tasks:
