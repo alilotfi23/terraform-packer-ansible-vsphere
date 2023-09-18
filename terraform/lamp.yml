@@ -2,7 +2,7 @@
   hosts: web
   become: yes
   tasks:
-    - name: Ansible apt to install multiple packages - LAMP
+    - name: install multiple packages - LAMP
       register: updatesys
       apt:
         update_cache: yes
