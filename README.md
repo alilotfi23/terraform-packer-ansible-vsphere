@@ -1,6 +1,6 @@
 # terraform-packer-ansible-vsphere
 
-## This project will Create identical images for vsphere and deploy vm on vsphere with terraform provisioneing with ansible
+## This project will Create identical images for vsphere and deploy vm on vsphere with terraform provisioneing by ansible
 
 ![pic](https://github.com/alilotfi23/terraform-packer-ansible-vsphere/assets/91953142/8ca60185-8d46-41d9-b829-9825b2a6ee0b)
 
