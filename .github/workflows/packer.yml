@@ -1,0 +1,34 @@
+name: Packer Build
+
+on:
+  push:
+    branches:
+      - main 
+env:
+  VERSION: "latest" 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup packer
+      uses: hashicorp/setup-packer@main
+      id: setup
+      with:
+        version: ${{ env.VERSION }}
+
+    - name: Initialize Packer
+      id: init
+      run: packer init -var-file=variables.pkr.hcl build.pkr.hcl
+
+    - name: Validate Packer configuration
+      id: validate
+      run: packer validate -var-file=variables.pkr.hcl build.pkr.hcl
+
+    - name: Build with Packer
+      id: build
+      run: packer build -var-file=variables.pkr.hcl build.pkr.hcl
