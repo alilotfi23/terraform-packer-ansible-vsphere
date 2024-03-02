@@ -13,18 +13,15 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Install Terraform dependencies
-        working-directory: my_terraform_module
         id: init
         run: terraform init
 
       - name: Terraform Validate
-        working-directory: my_terraform_module
         id: validate
         run: |
           terraform validate
 
       - name: Run Terraform tests
-        working-directory: my_terraform_module
         id: test
         run: terraform test
 
