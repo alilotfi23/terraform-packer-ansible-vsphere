@@ -53,12 +53,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           
-      - name: Store Version
-        run: echo "VERSION=${{ steps.semantic_release.outputs.version }}" >> $GITHUB_ENV
-      
-      - name: Print Version (export variable)
-        run: echo "Extracted version: $VERSION"
-
           
   release:
     needs: build
