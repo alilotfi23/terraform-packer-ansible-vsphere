@@ -18,13 +18,6 @@ jobs:
       id: setup
       with:
         version: ${{ env.VERSION }}
-
-    - name: Change to Packer directory
-      id: cd
-      run: |
-        cd packer
-        ls
-        pwd
      
     - name: Initialize Packer
       working-directory: packer
