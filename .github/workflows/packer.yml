@@ -27,12 +27,12 @@ jobs:
         
     - name: Initialize Packer
       id: init
-      run: packer init -var-file="variables.pkr.hcl" build.pkr.hcl
+      run: packer init .
 
     - name: Validate Packer configuration
       id: validate
-      run: packer validate -var-file="variables.pkr.hcl" build.pkr.hcl
+      run: packer validate .
 
     - name: Build with Packer
       id: build
-      run: packer build -var-file="variables.pkr.hcl" build.pkr.hcl
+      run: packer build .
