@@ -21,8 +21,10 @@ jobs:
 
     - name: Change to Packer directory
       id: cd
-      run: cd packer
-
+      run: |
+        cd packer
+        ls
+        
     - name: Initialize Packer
       id: init
       run: packer init -var-file=variables.pkr.hcl .
