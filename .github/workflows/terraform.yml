@@ -1,19 +1,27 @@
 name: Release
 
-on: workflow_dispatch
-permissions: write-all
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Print Branch Name
         id: branch_name
         run: echo "Current branch is ${{ github.ref }}"
-        
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
@@ -32,18 +40,27 @@ jobs:
       - name: Run Terraform tests (if available)
         id: test
         run: terraform test
+
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4
         with:
-           extra_plugins: |
-              @semantic-release/git
-              @semantic-release/github
-              @semantic-release/exec
-              @semantic-release/changelog
-           branches: |
+          extra_plugins: |
+            @semantic-release/git
+            @semantic-release/github
+            @semantic-release/exec
+            @semantic-release/changelog
+          branches: |
             [
               'main'
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.semantic_release.outputs.version }}
+          release_name: Release ${{ steps.semantic_release.outputs.version }}
+          body: ${{ steps.semantic_release.outputs.changelog }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
