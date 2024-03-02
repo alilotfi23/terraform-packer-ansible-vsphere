@@ -1,9 +1,11 @@
 name: Packer Build
 
-on:
-  push:
-    branches:
-      - main 
+#on:
+#  push:
+#    branches:
+#     - main 
+on: workflow_dispatch
+
 env:
   VERSION: "latest" 
 
