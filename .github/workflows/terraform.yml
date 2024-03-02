@@ -60,10 +60,7 @@ jobs:
         env:
             OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
       
-      - name: release output
-        uses: codfish/some-other-action@v1
-        with:
-          release-version: ${{ steps.semantic.outputs.release-version }}
+
 
   release:
     runs-on: ubuntu-latest
