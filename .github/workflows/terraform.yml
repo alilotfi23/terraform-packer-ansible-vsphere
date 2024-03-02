@@ -11,6 +11,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set branch slug
+        id: branch-slug
         run: echo "GITHUB_REF_SLUG=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
 
       - name: Setup Terraform
@@ -50,7 +51,8 @@ jobs:
         run: npm install semantic-release @semantic-release/changelog @semantic-release/git
 
       - name: Configure semantic-release
-        run: echo '{"branches": ["main"], "analyzeCommits": ["feat", "fix", "breaking change"], "release": {"tagFormat": "${GITHUB_REF_SLUG}-{version}"}, "plugins": ["@semantic-release/changelog", "@semantic-release/git"]}' > .semantic-release.json
+        run: |
+          echo '{"branches": ["main"], "analyzeCommits": ["feat", "fix", "breaking change"], "release": {"tagFormat": "${GITHUB_REF_SLUG}-{version}"}, "plugins": ["@semantic-release/changelog", "@semantic-release/git"]}' > .semantic-release.json
 
       - name: Release with semantic-release
         env:
