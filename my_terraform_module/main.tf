@@ -33,26 +33,29 @@ resource "vsphere_virtual_machine" "vm" {
   datastore_id         = data.vsphere_datastore.datacenter.id
   resource_pool_id     = data.vsphere_compute_cluster.cluster.resource_pool_id
   guest_id             = var.guest_id
-  cpu                  = var.vm_cpu
-  ram                  = var.vm_ram
+  num_cpus             = var.vm_cpu
+  memory               = var.vm_ram
 
   wait_for_guest_net_timeout = 0
   wait_for_guest_ip_timeout  = 0
+
   cdrom {
     datastore_id = data.vsphere_datastore.datacenter.id
     path         = var.path
+  }
+
   network_interface {
     network_id = data.vsphere_network.network.id
   }
+
   disk {
     label = "${var.vm_name}.vmdk"
-    size = var.vm_size
+    size  = var.vm_size
   }
- }
+
   provisioner "local-exec" {
     command = "ansible-playbook lamp.yml"
     depends_on = [null_resource.provisioner]
   }
-
 
 }
