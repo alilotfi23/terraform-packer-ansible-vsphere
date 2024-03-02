@@ -57,10 +57,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
+     - name: Create Release
+       uses: softprops/action-gh-release@v1
+       with:
           tag_name: v${{ needs.build.outputs['version'] }}
           body: Release notes and changelog for v${{ needs.build.outputs['version'] }}
-        env:
+       env:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
+
