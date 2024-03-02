@@ -52,7 +52,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
+          
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -64,7 +64,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ needs.build.outputs.version }}
-          title: Release v${{ needs.build.outputs.version }}
           body: Release notes and changelog for v${{ needs.build.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
