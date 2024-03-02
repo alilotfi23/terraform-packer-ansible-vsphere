@@ -13,9 +13,11 @@ module "my_vm_module" {
   vm_ram                 = 4096
   vm_name                = "your_vm_name"
   vm_size                = 50
-  vsphere_unverified_ssl = true  # or false based on your needs
+  vsphere_unverified_ssl = true  
   vm_network             = "your_vm_network"
-  cluster_name           = "your_cluster_name"  # Add this line
+  cluster_name           = "your_cluster_name"  
+  guest_id               = "your_guest_id"      
+  path                   = "your_path"          
 }
 
 # Optionally, you can use the outputs from the module directly
