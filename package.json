@@ -1,0 +1,8 @@
+{
+  "name": "terraform-packer-ansible-vsphere",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alilotfi23/terraform-packer-ansible-vsphere"
+  }
+}
