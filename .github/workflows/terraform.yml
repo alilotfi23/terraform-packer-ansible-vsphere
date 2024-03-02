@@ -48,11 +48,26 @@ jobs:
       - name: Install semantic-release dependencies
         run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git
 
-      - name: Configure semantic-release
+     # - name: Configure semantic-release
+      #  run: |
+      #    echo '{"branches": ["refs/heads/main"], "analyzeCommits": ["feat", "fix", "breaking change"], "release": {"tagFormat": "${{ env.GITHUB_REF_SLUG }}-{version}"}, "plugins": ["@semantic-release/changelog", "@semantic-release/git"]}' > .semantic-release.json
+      #  env:
+       #   GITHUB_REF_SLUG: refs/heads/main
+      - name: Configure semantic-release in package.json
         run: |
-          echo '{"branches": ["refs/heads/main"], "analyzeCommits": ["feat", "fix", "breaking change"], "release": {"tagFormat": "${{ env.GITHUB_REF_SLUG }}-{version}"}, "plugins": ["@semantic-release/changelog", "@semantic-release/git"]}' > .semantic-release.json
-        env:
-          GITHUB_REF_SLUG: refs/heads/main
+           echo '{
+              "semantic-release": {
+                "branches": ["main"],
+                "plugins": [
+                  "@semantic-release/commit-analyzer",
+                  "@semantic-release/release-notes-generator",
+                  "@semantic-release/changelog",
+                  "@semantic-release/npm",
+                  "@semantic-release/github"
+                ]
+              }
+            }' > package.json
+        shell: bash
 
       - name: Release with semantic-release
         env:
