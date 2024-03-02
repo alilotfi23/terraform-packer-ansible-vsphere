@@ -7,6 +7,9 @@ permissions: write-all
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.semantic_release.outputs.version }}
+
 
     steps:
       - name: Checkout Repository
@@ -54,8 +57,8 @@ jobs:
       - name: Create GitHub Release
         uses: actions/create-release@v1
         with:
-          tag_name:  ${{ github.ref }}
-          release_name: Release ${{ steps.semantic_release.outputs.version }}
+          tag_name:  ${{ needs.build.outputs.version }}
+          release_name: Release ${{ needs.build.outputs.version }}}
           draft: false
           prerelease: false
           body: ${{ steps.semantic_release.outputs.changelog }}
