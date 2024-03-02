@@ -51,10 +51,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Set Tag Name
+        id: set_tag_name
+        run: echo "TAG_NAME=${{ steps.semantic_release.outputs.version }}" >> $GITHUB_ENV
+
       - name: Create GitHub Release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ steps.semantic_release.outputs.version }}
+          tag_name: ${{ env.TAG_NAME }}
           release_name: Release ${{ steps.semantic_release.outputs.version }}
           draft: false
           prerelease: false
