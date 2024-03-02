@@ -63,7 +63,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ needs.build.outputs.version }}
-          body: Release notes and changelog for v${{ needs.build.outputs.version }}
+          tag_name: ${{ steps.semantic-release.outputs.version }}
+          body: Release ${{ steps.semantic-release.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
