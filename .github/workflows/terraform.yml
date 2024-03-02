@@ -49,6 +49,7 @@ jobs:
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
         uses: actions/create-release@v1
