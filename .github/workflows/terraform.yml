@@ -7,33 +7,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        
-      - name: Install Terraform dependencies
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Initialize Terraform
         id: init
         run: terraform init
-        
-      - name: Terraform Format
+
+      - name: Format Terraform code
         id: fmt
-        run: terraform fmt
-        
-      - name: Terraform Validate
+        run: terraform fmt -check
+
+      - name: Validate Terraform configuration
         id: validate
-        run: |
-          terraform validate
-             
-      - name: Run Terraform tests
+        run: terraform validate
+
+      - name: Run Terraform tests (if available)
         id: test
-        run: terraform test
+        run: |
+          terraform test  # Adjust command as needed for your test setup
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 16
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
@@ -43,14 +42,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-
 
-      - name: Install semantic-release locally
-        run: npm install semantic-release @semantic-release/changelog @semantic-release/git
+      - name: Install semantic-release dependencies
+        run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git
 
       - name: Configure semantic-release
-        run: echo '{"branches": ["main"], "analyzeCommits": ["feat", "fix", "breaking change"], "release": {"tagFormat": "next-${GITHUB_REF_SLUG}-${version}"}, "plugins": ["@semantic-release/changelog", "@semantic-release/git"]}' > .semantic-release.json
+        run: |
+          echo '{"branches": ["main"], "analyzeCommits": ["feat", "fix", "breaking change"], "release": {"tagFormat": "${{ env.GITHUB_REF_SLUG }}-{version}"}, "plugins": ["@semantic-release/changelog", "@semantic-release/git"]}' > .semantic-release.json
         shell: /usr/bin/bash -e {0}
         env:
-           GITHUB_REF_SLUG: main
+          GITHUB_REF_SLUG: main
 
       - name: Release with semantic-release
         env:
