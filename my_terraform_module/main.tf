@@ -17,6 +17,12 @@ data "vsphere_compute_cluster" "cluster" {
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
+resource "null_resource" "provisioner" {
+  provisioner "local-exec" {
+    command = "ansible-playbook lamp.yml"
+  }
+}
+
 resource "vsphere_virtual_machine" "vm" {
   name                 = var.vm_name
   datastore_id         = data.vsphere_datastore.datacenter.id
@@ -38,10 +44,10 @@ resource "vsphere_virtual_machine" "vm" {
     size = var.vm_size
   }
  }
- provisioner "local-exec" {
-  inline = [
-    "ansible-playbook lamp.yml"
-  ]
-}
+  provisioner "local-exec" {
+    command = "ansible-playbook lamp.yml"
+    depends_on = [null_resource.provisioner]
+  }
+
 
 }
