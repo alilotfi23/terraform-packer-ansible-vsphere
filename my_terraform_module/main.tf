@@ -53,9 +53,9 @@ resource "vsphere_virtual_machine" "vm" {
     size  = var.vm_size
   }
 
+  depends_on = [null_resource.provisioner]
   provisioner "local-exec" {
     command = "ansible-playbook lamp.yml"
-    depends_on = [null_resource.provisioner]
   }
 
 }
