@@ -10,7 +10,6 @@ jobs:
     outputs:
       version: ${{ steps.semantic_release.outputs.version }}
 
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -54,22 +53,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Save Version
-        run: echo "${{ steps.semantic_release.outputs.version }}" > version.txt
-
-  create_release:
-    runs-on: ubuntu-latest
+  release:
     needs: build
+    runs-on: ubuntu-latest
     steps:
-      - name: Set Tag Name
-        run: echo "tag_name=$(cat version.txt)" >> $GITHUB_ENV
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Create GitHub Release
-        uses: actions/create-release@v1
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ env.tag_name }}
-          release_name: Release ${{ env.tag_name }}
-          draft: false
-          prerelease: false
+          tag_name: v${{ needs.build.outputs.version }}
+          title: Release v${{ needs.build.outputs.version }}
+          body: Release notes and changelog for v${{ needs.build.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
