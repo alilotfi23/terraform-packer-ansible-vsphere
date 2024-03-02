@@ -20,12 +20,6 @@ module "my_vm_module" {
   path                   = "your_path"          
 }
 
-# Optionally, you can use the outputs from the module directly
-output "vm_ip_address" {
-  description = "The IP address of the provisioned virtual machine"
-  value       = module.my_vm_module.vm_ip_address
-}
-
 output "vm_name" {
   description = "The name of the provisioned virtual machine"
   value       = module.my_vm_module.vm_name
