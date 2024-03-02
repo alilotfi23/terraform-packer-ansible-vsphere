@@ -7,8 +7,6 @@ permissions: write-all
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.semantic_release.outputs.version }}
 
     steps:
       - name: Checkout Repository
@@ -45,24 +43,24 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        
-      - name: Create Tag
-        run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git tag -a v${{ needs.build.outputs.version }} -m "Release version v${{ needs.build.outputs.version }}"
-          git push origin v${{ needs.build.outputs.version }}
+release:
+  needs: build
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          name: v${{ needs.build.outputs.version }}
-          body: Release notes and changelog for v${{ needs.build.outputs.version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
+    - name: Semantic Release
+      id: semantic
+      uses: codfish/semantic-release-action@v3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    - name: Display Release Version
+      run: echo "Release version is ${{ steps.semantic.outputs.release-version }}"
+
+    - name: Pass Release Version to Another Action
+      uses: codfish/some-other-action@v1
+      with:
+        release-version: ${{ steps.semantic.outputs.release-version }}
