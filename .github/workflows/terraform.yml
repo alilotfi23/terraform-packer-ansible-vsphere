@@ -12,28 +12,19 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         
-      - name: pwd
-        run: |
-          pwd
-          ls
       - name: Install Terraform dependencies
         id: init
         run: terraform init
-      - name: pwd
-        run: |
-          pwd
-          ls
-
+        
+      - name: Install Terraform dependencies
+        id: fmt
+        run: terraform fmt
+        
       - name: Terraform Validate
         id: validate
         run: |
           terraform validate
-          
-      - name: pwd
-        run: |
-          pwd
-          ls
-          
+             
       - name: Run Terraform tests
         id: test
         run: terraform test
