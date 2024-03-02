@@ -52,10 +52,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: print output
-        run: echo "Version is ${{ needs.build.outputs.version }}"
-      - name: print output-2
-        run: echo v${{ needs.build.outputs['version'] }}
+          
+      - name: Store Version
+        run: echo "VERSION=${{ steps.semantic_release.outputs.version }}" >> $GITHUB_ENV
+      
+      - name: Print Version (export variable)
+        run: echo "Extracted version: $VERSION"
 
           
   release:
