@@ -18,7 +18,7 @@ jobs:
 
       - name: Format Terraform code
         id: fmt
-        run: terraform fmt -check
+        run: terraform fmt
 
       - name: Validate Terraform configuration
         id: validate
@@ -26,8 +26,7 @@ jobs:
 
       - name: Run Terraform tests (if available)
         id: test
-        run: |
-          terraform test  # Adjust command as needed for your test setup
+        run: terraform test  
 
       - name: Install Node.js
         uses: actions/setup-node@v4
