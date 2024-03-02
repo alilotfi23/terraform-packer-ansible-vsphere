@@ -28,8 +28,3 @@ jobs:
       working-directory: packer
       id: validate
       run: packer validate .
-
-    - name: Build with Packer
-      working-directory: packer
-      id: build
-      run: packer build .
