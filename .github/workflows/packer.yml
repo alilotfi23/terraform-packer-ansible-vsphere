@@ -20,16 +20,17 @@ jobs:
         version: ${{ env.VERSION }}
 
     - name: Change to Packer directory
+      id: cd
       run: cd packer
 
     - name: Initialize Packer
       id: init
-      run: packer init -var-file=variables.pkr.hcl build.pkr.hcl
+      run: packer init -var-file=variables.pkr.hcl .
 
     - name: Validate Packer configuration
       id: validate
-      run: packer validate -var-file=variables.pkr.hcl build.pkr.hcl
+      run: packer validate -var-file=variables.pkr.hcl .
 
     - name: Build with Packer
       id: build
-      run: packer build -var-file=variables.pkr.hcl build.pkr.hcl
+      run: packer build -var-file=variables.pkr.hcl .
