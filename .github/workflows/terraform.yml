@@ -8,11 +8,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      
       - name: Print Branch Name
         id: branch_name
         run: echo "Current branch is ${{ github.ref }}"
-
+        
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
@@ -28,14 +28,14 @@ jobs:
         id: validate
         run: terraform validate
 
-      - name: Run Terraform tests (if available)
+      - name: Run Terraform tests
         id: test
-        run: terraform test
+        run: terraform test  
 
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version: 'lts/*'
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
@@ -45,19 +45,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-
 
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Install semantic-release dependencies
+        run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git
 
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v4
-        with:
-          branches: |
-            [
-              '+([0-9])?(.{+([0-9]),x}).x',
-              'master'
-            ]
-        extra_plugins: |
-          @semantic-release/changelog@6.0.0
-          @semantic-release/git
+      - name: Configure semantic-release
+        run: |
+         echo '{"branches": ["main"], "analyzeCommits": ["feat", "fix", "breaking change"], "release": {"tagFormat": "${{ env.GITHUB_REF_SLUG }}-{version}"}, "plugins": ["@semantic-release/changelog", "@semantic-release/git"]}' > .semantic-release.json
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REF_SLUG: main
+          
+      - name: Release with semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
+        run: npx semantic-release
