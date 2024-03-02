@@ -35,6 +35,14 @@ jobs:
         id: test
         run: terraform test
 
+      - name: Create Release Tag
+        run: git tag -a v${{ steps.semantic.outputs.release-version }} -m "Release version v${{ steps.semantic.outputs.release-version }}"
+        if: success()
+      
+      - name: Push Release Tag
+        run: git push origin v${{ steps.semantic.outputs.release-version }}
+        if: success()
+
       - name: Semantic Release
         uses: codfish/semantic-release-action@v3
         id: semantic
@@ -52,8 +60,11 @@ jobs:
         env:
             OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
       
+      - name: release output
+        uses: codfish/some-other-action@v1
+        with:
+          release-version: ${{ steps.semantic.outputs.release-version }}
 
-      
   release:
     runs-on: ubuntu-latest
     needs: build
@@ -66,6 +77,4 @@ jobs:
         with:
           name: v${{ needs.build.outputs.semantic.outputs.release-version }}
           body: Release notes and changelog for v${{ needs.build.outputs.semantic.outputs.release-version }}
-          files: /path/to/artifacts/*
-        env:
-          GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
+          token: ${{ secrets.SEC_TOKEN }}
