@@ -55,6 +55,5 @@ jobs:
         with:
           name: v${{ needs.build.outputs.version }}
           body: Release notes and changelog for v${{ needs.build.outputs.version }}
-          files: /path/to/artifacts/*  # Adjust this path to match the actual path of your artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
