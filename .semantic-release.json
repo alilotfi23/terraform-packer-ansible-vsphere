@@ -1,0 +1,8 @@
+{
+  "branches": ["main", "develop", "feature"],
+  "analyzeCommits": ["feat", "fix", "breaking change"],
+  "release": {
+    "tagFormat": "${GITHUB_REF_SLUG}-{version}"
+  },
+  "plugins": ["@semantic-release/changelog", "@semantic-release/git"]
+}
