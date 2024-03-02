@@ -38,7 +38,3 @@ output "cluster_name" {
   description = "The name of the selected compute cluster"
   value       = module.my_vm_module.cluster_name
 }
-data "vsphere_datastore" "datacenter" {
-  name          = var.datastore
-  datacenter_id = data.vsphere_datacenter.datacenter.id
-}
