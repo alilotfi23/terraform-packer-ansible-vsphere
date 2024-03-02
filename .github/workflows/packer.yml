@@ -24,17 +24,19 @@ jobs:
       run: |
         cd packer
         ls
-    - name: pwd
-      run: pwd
+        pwd
      
     - name: Initialize Packer
+      working-directory: packer
       id: init
       run: packer init .
 
     - name: Validate Packer configuration
+      working-directory: packer
       id: validate
       run: packer validate .
 
     - name: Build with Packer
+      working-directory: packer
       id: build
       run: packer build .
