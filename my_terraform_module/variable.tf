@@ -47,6 +47,15 @@ variable "vm_name" {
   type        = string
   description = "The name of the virtual machines"
 }
+variable "guest_id" {
+  type        = string
+  description = "The ID of the guest"
+}
+
+variable "path" {
+  type        = string
+  description = "The path for the CD-ROM"
+}
 
 variable "vm_size" {
   type        = number
