@@ -51,6 +51,13 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        
+      - name: Create Tag
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git tag -a v${{ needs.build.outputs.version }} -m "Release version v${{ needs.build.outputs.version }}"
+          git push origin v${{ needs.build.outputs.version }}
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
