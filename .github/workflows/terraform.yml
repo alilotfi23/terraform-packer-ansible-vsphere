@@ -2,13 +2,7 @@ name: Release
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-
-permissions:
-  contents: read
-  packages: write
+permissions: write-all
 
 jobs:
   build:
