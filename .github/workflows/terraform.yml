@@ -56,6 +56,8 @@ jobs:
         with:
           tag_name: ${{ steps.semantic_release.outputs.version }}
           release_name: Release ${{ steps.semantic_release.outputs.version }}
+          draft: false
+          prerelease: false
           body: ${{ steps.semantic_release.outputs.changelog }}
         env:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
