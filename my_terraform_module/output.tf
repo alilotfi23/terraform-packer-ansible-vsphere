@@ -1,8 +1,3 @@
-output "vm_ip_address" {
-  description = "The IP address of the provisioned virtual machine"
-  value       = vsphere_virtual_machine.vm.network_interface[0].ipv4_address
-}
-
 output "vm_name" {
   description = "The name of the provisioned virtual machine"
   value       = vsphere_virtual_machine.vm.name
