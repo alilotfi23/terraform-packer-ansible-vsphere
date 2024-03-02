@@ -22,12 +22,14 @@ jobs:
     - name: Change to Packer directory
       id: cd
       run: |
+        pwd
+        ls -la
         cd packer
         ls
         
-    - name: Initialize Packer
-      id: init
-      run: packer init -var-file=variables.pkr.hcl build.pkr.hcl
+  #  - name: Initialize Packer
+   #   id: init
+   #   run: packer init -var-file=variables.pkr.hcl build.pkr.hcl
 
     - name: Validate Packer configuration
       id: validate
