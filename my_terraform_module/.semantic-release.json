@@ -1,5 +1,5 @@
 {
-  "branches": ["main"],
+  "branches": ["main", "develop", "feature"],
   "analyzeCommits": ["feat", "fix", "breaking change"],
   "release": {
     "tagFormat": "${GITHUB_REF_SLUG}-{version}"
