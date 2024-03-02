@@ -52,16 +52,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: print output
+        run: echo "Version is ${{ needs.build.outputs.version }}"
+      - name: print output-2
+        run: echo v${{ needs.build.outputs['version'] }}
+
           
   release:
     needs: build
     runs-on: ubuntu-latest
     steps:
-     - name: print output
-       run: echo "Version is ${{ needs.build.outputs.version }}"
-     - name: print output-2
-       run: echo v${{ needs.build.outputs['version'] }}
-
      - name: Create Release
        uses: softprops/action-gh-release@v1
        with:
