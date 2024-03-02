@@ -54,7 +54,7 @@ jobs:
       - name: Create GitHub Release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ steps.semantic-release.outputs.version }}
+          tag_name: ${{ needs.build.outputs.version }}
           release_name: Release ${{ steps.semantic_release.outputs.version }}
           draft: false
           prerelease: false
