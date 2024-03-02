@@ -51,9 +51,8 @@ jobs:
       - name: Configure semantic-release
         run: |
           echo '{"branches": ["refs/heads/main"], "analyzeCommits": ["feat", "fix", "breaking change"], "release": {"tagFormat": "${{ env.GITHUB_REF_SLUG }}-{version}"}, "plugins": ["@semantic-release/changelog", "@semantic-release/git"]}' > .semantic-release.json
-        shell: /usr/bin/bash -e {0}
         env:
-          GITHUB_REF_SLUG: main
+          GITHUB_REF_SLUG: refs/heads/main
 
       - name: Release with semantic-release
         env:
