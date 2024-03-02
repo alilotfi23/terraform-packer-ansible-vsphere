@@ -12,8 +12,14 @@ jobs:
 
       - name: Set branch slug
         id: branch-slug
-        run: echo "GITHUB_REF_SLUG=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
-
+        run: |
+          SLUG=$(echo ${GITHUB_REF#refs/heads/} | tr / -)
+          echo "GITHUB_REF_SLUG=$SLUG"
+          echo "GITHUB_REF=$GITHUB_REF"
+          echo "Branches: ${{ toJson(steps.branch-slug.outputs) }}"
+        env:
+            GITHUB_REF: ${{ github.ref }}
+        
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         
