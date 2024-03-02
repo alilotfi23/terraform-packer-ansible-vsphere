@@ -50,7 +50,7 @@ jobs:
 
       - name: Configure semantic-release
         run: |
-          echo '{"branches": ["${{ steps.branch_name.outputs.branch_name }}"], "analyzeCommits": ["feat", "fix", "breaking change"], "release": {"tagFormat": "${{ env.GITHUB_REF_SLUG }}-{version}"}, "plugins": ["@semantic-release/changelog", "@semantic-release/git"]}' > .semantic-release.json
+          echo '{"branches": ["${{ refs/heads/main }}"], "analyzeCommits": ["feat", "fix", "breaking change"], "release": {"tagFormat": "${{ env.GITHUB_REF_SLUG }}-{version}"}, "plugins": ["@semantic-release/changelog", "@semantic-release/git"]}' > .semantic-release.json
         shell: /usr/bin/bash -e {0}
         env:
           GITHUB_REF_SLUG: main
