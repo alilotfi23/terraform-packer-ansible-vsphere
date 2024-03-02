@@ -13,4 +13,6 @@ module "my_vm_module" {
   vm_name             = "your_vm_name"
   vm_size             = 50
   vsphere_unverified_ssl = true  # or false based on your needs
+  vm_network          = "your_vm_network"
+  cluster_name        = "your_cluster_name"
 }
