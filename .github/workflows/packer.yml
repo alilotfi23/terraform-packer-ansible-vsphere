@@ -24,7 +24,9 @@ jobs:
       run: |
         cd packer
         ls
-        
+    - name: pwd
+      run: pwd
+     
     - name: Initialize Packer
       id: init
       run: packer init .
