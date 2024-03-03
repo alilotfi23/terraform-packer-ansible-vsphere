@@ -8,9 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.semantic-release.outputs.version }}
+       version: ${{ steps.semantic-release.outputs.version }}
     env:
-      BUILD_VERSION: ${{ steps.semantic-release.outputs.version }}
+       BUILD_VERSION: ${{ steps.semantic-release.outputs.version }}
 
     steps:
       - name: Checkout Repository
