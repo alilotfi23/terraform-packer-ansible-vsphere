@@ -55,14 +55,14 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           
   release:
-        needs: build
+#        needs: build
         runs-on: ubuntu-latest
         steps:
           - name: Create Release
             uses: softprops/action-gh-release@v1
             with:
-               tag_name: v${{ needs.build.outputs['version'] }}
-               body: Release notes and changelog for v${{ needs.build.outputs['version'] }}
+               tag_name: ${{ steps.semantic_release.outputs.version }}
+               body: Release ${{ steps.semantic_release.outputs.version }}
             env:
               GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
 
