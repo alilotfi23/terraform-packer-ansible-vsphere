@@ -9,8 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
        version: ${{ steps.semantic-release.outputs.version }}
-    env:
-       BUILD_VERSION: ${{ steps.semantic-release.outputs.version }}
+
 
     steps:
       - name: Checkout Repository
@@ -62,8 +61,8 @@ jobs:
           - name: Create Release
             uses: softprops/action-gh-release@v1
             with:
-              tag_name: v${{ env.BUILD_VERSION }}
-              body: Release notes and changelog for v${{ env.BUILD_VERSION }}
+              tag_name: v${{ needs.build.outputs['version'] }}
+               body: Release notes and changelog for v${{ needs.build.outputs['version'] }}
             env:
               GITHUB_TOKEN: ${{ secrets.SEC_TOKEN }}
 
