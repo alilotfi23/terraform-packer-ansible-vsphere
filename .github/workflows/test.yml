@@ -42,4 +42,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npx semantic-release
-          echo "Semantic Release Output: $?"
+          echo "Semantic Release Output : $?"
