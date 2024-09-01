@@ -1,11 +1,15 @@
-- name: instsall pkgs
+---
+- name: Install LAMP Stack Packages
   hosts: web
   become: yes
   tasks:
-    - name: install multiple packages - LAMP
-      register: updatesys
+    - name: Update apt cache
       apt:
         update_cache: yes
+      register: cache_update
+
+    - name: Install LAMP stack packages
+      apt:
         name:
           - firewalld
           - apache2
@@ -13,3 +17,31 @@
           - php
           - php-mysql
         state: present
+      when: cache_update.changed  # Only install if cache was updated
+      register: install_packages
+
+    - name: Check installation results
+      debug:
+        msg: "Packages installed successfully"
+      when: install_packages.changed
+
+    - name: Start and enable Apache service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Start and enable MariaDB service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Configure firewalld to allow HTTP and HTTPS
+      firewalld:
+        service: 
+          - http
+          - https
+        permanent: yes
+        state: enabled
+      when: install_packages.changed
