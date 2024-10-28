@@ -1,4 +1,4 @@
-# Terraform module for vsphere/versioning  with semantic realse bot
+# Terraform module for vsphere/versioning  with semantic release bot
 
 ## This project will Create identical images for vsphere and deploy vm on vsphere with terraform-module provisioneing by ansible
 
