@@ -1,5 +1,5 @@
 {
-  "name": "terraform-demo-module",
+  "name": "terraform-module",
   "private": true,
   "devDependencies": {
     "@semantic-release/github": "^9.0.3",
